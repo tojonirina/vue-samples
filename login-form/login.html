@@ -17,13 +17,27 @@
             <input type="password" v-model="password" v-bind:disabled="!isUsernameChecked" name="mypassword" class="form-control" placeholder="Password" />
             <sup v-if="isUsernameChecked">{{ passwordMessage }}</sup>
             <br>
-            <button type="button" v-bind:disabled="!isPasswordChecked" class="btn btn-success w-100">Validate</button>
+            <button type="button" v-bind:disabled="!isPasswordChecked" v-on:click.prevent="" class="btn btn-success w-100">Validate</button>
         </form>
 
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
+
+        Vue.component('AuthInputUsername', {
+
+        });
+
+        Vue.component('AuthInputPassword', {
+            
+        });
+
+        Vue.component('AuthButtonValidate', {
+            
+        });
+
+
         let vm = new Vue({
             el: '#app',
             data : {
@@ -34,17 +48,38 @@
                 username: '',
                 password: ''
             },
+
             methods: {
                 
             },
+
             computed: {
 
             },
 
+            watch: {
+                username : function (newValue, oldValue) {
+                    if (newValue !== '') {
+                        this.usernameMessage = '';
+                    } else {
+                        this.usernameMessage = '* Champ obligatoire';
+                    }
+                }
+            },
+
             // HOOKS
-            created: function() {
+            created() {
                 console.log('Created');
-            }
+            },
+            mounted() {
+                console.log('Mounted');
+            },
+            destroyed() {
+                console.log('Destroyed');
+            },
+            updated() {
+                console.log('Updated');
+            },
         });
     </script>
 </body>
