@@ -23,13 +23,9 @@
             <tbody>
 
                 <template v-if="items.length > 0">
-                    <tr v-for="(item, index) in items" v-bind:key="item.title">
-                        <td>{{ item.title }}</td>
-                        <td class="text-center p-0">
-                            <button @click="deleteItem(index)" class="btn text-danger p-0"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
+                    <todo-list v-for="(item, index) in items" :key="index" :todo="item" @delete="deleteItem(index)"></todo-list>
                 </template>
+
                 <tr v-else><td><i>No items added</i></td></tr>
 
             </tbody>
@@ -38,6 +34,16 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
+
+        Vue.component('todo-list', {
+            props: ['todo'],
+            template: '<tr>\
+                    <td> {{ todo.title }} </td>\
+                    <td>\
+                        <button v-on:click="$emit(\'delete\')" class="btn text-danger p-0"><i class="bi bi-trash"></i></button>\
+                    </td>\
+                </tr>'
+        });
 
         let ViewModel = new Vue({
             el: '#app',
