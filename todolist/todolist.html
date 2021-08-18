@@ -53,7 +53,9 @@
             },
             methods: {
                 addItem: function() {
-                    this.items.push({ title: this.itemField });
+                    if (this.itemField !== '') {
+                        this.items.push({ title: this.itemField });
+                    }
                     this.itemField = '';
                 },
                 deleteItem: function(itemIndex) {
