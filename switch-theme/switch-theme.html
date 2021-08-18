@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme switching</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div v-bind:class="contentStyle" class="container p-2 m-0" id="app">
+        <div class="form-check form-switch">
+            <input @click="changeMode" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault"><i v-bind:class="iconMode"></i></label>
+        </div>
+        <hr>
+        <div class="container-fluid">
+            <h3>This is an exemple of light and dark mode switching in vue.js</h3>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+
+        let ViewModel = new Vue({
+            el: '#app',
+            data: {
+                light: true,
+                textMode: 'Light mode',
+            },
+            methods: {
+
+                changeMode: function () {
+
+                    if (this.light === true) {
+                        console.log('Dark mode');
+                        this.light = false;
+                        this.textMode = 'Dark mode';
+                    } else {
+                        console.log('Light mode');
+                        this.light = true;
+                        this.textMode = 'Light mode';
+                    }
+                }
+            },
+
+            computed: {
+                iconMode : function () {
+                    return {
+                        'bi bi-moon-fill': !this.light,
+                        'bi bi-sun': this.light
+                    }
+                },
+                contentStyle: function () {
+                    return { 
+                        'bg-dark': !this.light, 
+                        'text-white': !this.light 
+                    }
+                }
+            },
+
+        });
+
+    </script>
+</body>
+</html>
