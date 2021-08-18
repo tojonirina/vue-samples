@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todolist</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container-fluid bg-light p-2" id="app">
+        <input type="text" v-model="itemField" class="form-control" placeholder="Type item title here ..." /> <br>
+        <button @click.stop="addItem" class="btn btn-success w-100">Add</button> 
+        <hr>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th>Item title</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <template v-if="items.length > 0">
+                    <tr v-for="(item, index) in items" v-bind:key="item.title">
+                        <td>{{ item.title }}</td>
+                        <td class="text-center p-0">
+                            <button @click="deleteItem(index)" class="btn text-danger p-0"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                </template>
+                <tr v-else><td><i>No items added</i></td></tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+
+        let ViewModel = new Vue({
+            el: '#app',
+            data : {
+                items: [],
+                itemField: ''
+            },
+            methods: {
+                addItem: function() {
+                    this.items.push({ title: this.itemField });
+                    this.itemField = '';
+                },
+                deleteItem: function(itemIndex) {
+                    this.items.splice(itemIndex, 1);
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
