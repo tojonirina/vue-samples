@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container-fluid bg-light p-2" id="app">
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Articles name</th>
+                    <th>Q/ty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in articles" :key="index">
+                    <td class="text-center">
+                        <input type="checkbox" :value="index" v-model="checkedlist" />
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.qty }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="container-fluid">
+            <button v-if="checkedlist.length > 0" @click="deleteItem" class="btn btn-danger p-1"><i class="bi bi-trash"></i> Delete ({{ checkedlist.length }})</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+
+    var example1 = new Vue({
+        el: '#app',
+        data: {
+            articles: [
+                { name: 'Sillicon for iphone 8S', qty: 20 },
+                { name: 'Macbook pro retina 2019 (Silver)', qty: 10 },
+                { name: 'Sillicon for iphone 8S', qty: 20 },
+                { name: 'Macbook pro retina 2019 (Silver)', qty: 10 },
+                { name: 'Sillicon for iphone 8S', qty: 20 },
+                { name: 'Macbook pro retina 2019 (Silver)', qty: 10 },
+                { name: 'Sillicon for iphone 8S', qty: 20 },
+                { name: 'Macbook pro retina 2019 (Silver)', qty: 10 },
+            ],
+            checkedlist: []
+        },
+        methods: {
+            deleteItem: function() {
+                this.articles.forEach((item, index) => {
+                    this.checkedlist.forEach(item => {
+                        if (item === index) {
+                            this.articles.splice(index, 1);
+                        }
+                    });
+                });
+            }
+        },
+    });
+
+    </script>
+</body>
+</html>
