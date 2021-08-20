@@ -39,7 +39,7 @@
             props: ['todo'],
             template: '<tr>\
                     <td> {{ todo.title }} </td>\
-                    <td>\
+                    <td class="text-center p-0">\
                         <button v-on:click="$emit(\'delete\')" class="btn text-danger p-0"><i class="bi bi-trash"></i></button>\
                     </td>\
                 </tr>'
