@@ -37,7 +37,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
 
-    var example1 = new Vue({
+    var ViewModel = new Vue({
         el: '#app',
         data: {
             articles: [
@@ -55,12 +55,16 @@
         methods: {
             deleteItem: function() {
                 this.articles.forEach((item, index) => {
-                    this.checkedlist.forEach(item => {
-                        if (item === index) {
-                            this.articles.splice(index, 1);
+                    this.checkedlist.forEach(checkedItem => {
+                        if (checkedItem === index) {
+                            delete this.articles[index];
                         }
                     });
                 });
+                this.articles = this.articles.filter((item) => {
+                    return item !== undefined;
+                });
+                this.checkedlist = [];
             }
         },
     });
