@@ -34,16 +34,7 @@
             methods: {
 
                 changeMode: function () {
-
-                    if (this.light === true) {
-                        console.log('Dark mode');
-                        this.light = false;
-                        this.textMode = 'Dark mode';
-                    } else {
-                        console.log('Light mode');
-                        this.light = true;
-                        this.textMode = 'Light mode';
-                    }
+                    this.light = !this.light;
                 }
             },
 

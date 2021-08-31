@@ -10,7 +10,9 @@
 <body>
 
     <div class="container p-2" id="app">
-        <div v-bind:class="statusMessageColor" class="container p-2 text-center"><h1>{{ statusMessage }}</h1></div>
+        <div class="container p-2 text-center border mb-1">
+            Status : <h1 v-bind:class="statusMessageColor">{{ statusMessage }}</h1>
+        </div>
         
         <button v-if="stopped" @click="start" class="btn btn-success w-100 mb-2">Start</button>
         
@@ -28,10 +30,6 @@
     
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
-
-        Vue.component('startButton', {
-            template: ''
-        })
 
         let ViewModel = new Vue({
             el: '#app',

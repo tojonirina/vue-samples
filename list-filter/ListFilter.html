@@ -10,13 +10,13 @@
 <body>
 
     <div class="container-fluid bg-light p-2" id="app">
-        <input type="search" v-model="searchMember" class="form-control" placeholder="Recherche un membre..." /> <br>
+        <input type="search" v-model="searchMember" class="form-control" placeholder="Recherche par nom ou email ..." /> <br>
         <table class="table table-sm table-bordered">
             <thead>
                 <tr>
-                    <th>Full name</th>
+                    <th>Nom complet</th>
                     <th>Age</th>
-                    <th>Gender</th>
+                    <th>Sexe</th>
                     <th>Email</th>
                 </tr>
             </thead>
@@ -27,6 +27,10 @@
                     <td>{{ member.gender }}</td>
                     <td>{{ member.email }}</td>
                 </tr>
+
+                <template v-if="memberList.length == 0">
+                    <tr><td colspan="4"><i>no result</i></td></tr>
+                </template>
             </tbody>
         </table>
     </div>
@@ -38,18 +42,18 @@
             el: '#app',
             data : {
                 members: [
-                    { fullname: 'Jean Pierre', age: 53, gender: 'man', email: 'jean.pierre@yahoo.com' },
-                    { fullname: 'Maurice Antoine', age: 43, gender: 'man', email: 'maurice34@gmail.com' },
-                    { fullname: 'Henriette Terrier', age: 52, gender: 'woman', email: 'h.terrier@hotmail.fr' },
-                    { fullname: 'Thibault Arthur', age: 29, gender: 'man', email: 'thibaultarthur@gmail.com' },
-                    { fullname: 'Viviane Jean d\'Arque', age: 40, gender: 'woman', email: 'vivija@yahoo.com' }
+                    { fullname: 'Jean Pierre', age: 53, gender: 'Homme', email: 'jean.pierre@yahoo.com' },
+                    { fullname: 'Maurice Antoine', age: 43, gender: 'Homme', email: 'maurice34@gmail.com' },
+                    { fullname: 'Henriette Terrier', age: 52, gender: 'Femme', email: 'h.terrier@hotmail.fr' },
+                    { fullname: 'Thibault Arthur', age: 29, gender: 'Homme', email: 'thibaultarthur@gmail.com' },
+                    { fullname: 'Viviane Jean d\'Arque', age: 40, gender: 'Femme', email: 'vivija@yahoo.com' }
                 ],
                 searchMember:''
             },
             computed: {
                 memberList: function() {
                     return this.members.filter( (member) => {
-                        return member.fullname.toLowerCase().includes(this.searchMember.toLowerCase());
+                        return member.fullname.toLowerCase().includes(this.searchMember.toLowerCase()) || member.email.includes(this.searchMember.toLowerCase());
                     });
                 }
             }
