@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+        .slide-fade-leave-active {
+            transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+        .slide-fade-enter, .slide-fade-leave-to {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="signup" class="p-2">
+
+        
+        <template v-if="page === 1">
+
+            <keep-alive>
+                
+                <transition name="slide-fade" mode="out-in">
+                    <signup-page-one>
+                        
+                        <template #name-input>
+                            <base-input name="fullname"></base-input>
+                        </template>
+            
+                        <template #email-input>
+                            <base-input name="email" type="email"></base-input>
+                        </template>
+            
+                    </signup-page-one>
+                </transition>
+                    
+            </keep-alive>
+                
+            <br>
+                
+            <base-button text="Next" @click="nextPage"></base-button>
+                
+        </template>
+    
+            <template v-if="page === 2">
+
+                <keep-alive>
+
+                    <transition :duration='100' name="slide-fade" mode="out-in">
+                        <signup-page-two>
+                            
+                            <template #login-input>
+                                <base-input name="login"></base-input>
+                            </template>
+                
+                            <template #password-input>
+                                <base-input name="password" type="password"></base-input>
+                            </template>
+                
+                        </signup-page-two>
+                    </transition>
+                
+                </keep-alive>
+    
+                <br>
+    
+                <base-button text="Previous" @click="previousPage" color="warning"></base-button>
+            </template>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+
+        Vue.component('base-input', {
+            props: {
+                value: String,
+                name: {
+                    type: String,
+                    required: true
+                },
+                type: {
+                    type: String,
+                    required: true,
+                    default: 'text'
+                }
+            },
+            template: `
+                <div>
+                    <label :for="name">{{ name }}: </label>
+                    <input 
+                        :type="type"
+                        :name="name"
+                        :value="value"
+                        @input="$emit('input', $event.target.value)" 
+                        class="form-control" 
+                    />
+                </div>`
+        });
+
+        Vue.component('signup-page-one', {
+            template: `
+                <div class="container">
+                    <slot name="name-input"></slot>
+                    <slot name="email-input"></slot>
+                </div>`
+        });
+
+        Vue.component('signup-page-two', {
+            template: `
+                <div class="container">
+                    <slot name="login-input"></slot>
+                    <slot name="password-input"></slot>
+                </div>`
+        });
+
+        Vue.component('base-button', {
+            props:{
+                text: {
+                    type: String,
+                    required: true
+                },
+                type: {
+                    type:  String,
+                    required: false,
+                    default: 'button'
+                },
+                color: {
+                    type: String,
+                    required: false,
+                    default: 'primary'
+                }
+            },
+            template: `
+                <button :type="type" @click="$emit('click')" :class=" 'btn btn-' + color ">
+                    {{ text }}
+                    <slot></slot>
+                </button>`
+        });
+
+        new Vue({
+            el: '#signup',
+            data: {
+                page: 1
+            },
+            methods: {
+                nextPage: function() {
+                    this.page = 2;
+                },
+                previousPage: function() {
+                    this.page = 1;
+                }
+            },
+        });
+
+
+    </script>
+</body>
+</html>
