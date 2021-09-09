@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Place reservation</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+
+	<div id="demo" class="p-2">
+		<place-button v-for="placeNumber in carAvailPlace" :place-number="placeNumber" :key="placeNumber">
+			{{ placeNumber }}
+		</place-button>
+		<hr>
+		Place marqu&eacute;e(s): {{ checkedPlace }}
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script>
+
+		Vue.component('place-button', {
+			props: {
+				placeNumber: {
+					type: Number,
+					required: true
+				}
+			},
+			data() {
+				return {
+					isChecked: false
+				}
+			},
+			methods: {
+				takePlace: function(placeNumber) {
+				
+					if (this.$root.checkedPlace.includes(placeNumber)) {
+
+						this.$root.checkedPlace.forEach((item, index) => {
+							if(item === placeNumber) {
+								this.$root.checkedPlace.splice(index, 1);
+							}
+						}); 
+						
+					} else {
+						this.$root.checkedPlace.push(placeNumber);
+					}
+					
+					this.isChecked = !this.isChecked;
+					
+				},
+				isTaked: function(placeNumber) {
+					return !this.$root.AvailPlaceNumber.includes(placeNumber);
+				}
+			},
+			template: `
+        <button @click="takePlace(placeNumber)" :disabled="isTaked(placeNumber)" :class="{ 'btn-success': isChecked, 'border-success': !isTaked(placeNumber) }" class="p-4 m-1 border btn">
+          <slot></slot>
+        </button>`
+		});
+
+		new Vue({
+			el: '#demo',
+			data() {
+				return {
+					carAvailPlace: 7,
+					AvailPlaceNumber: [1, 4, 5],
+					checkedPlace: []
+				}
+			},
+		});
+
+
+	</script>
+</body>
+
+</html>
